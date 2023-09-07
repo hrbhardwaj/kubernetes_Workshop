@@ -1,0 +1,62 @@
+# Config-Map 
+
+[ Problems without config-map ]
+      = While performing application deployment on kub8 cluster, we need to change the application configuration file depend on environments like QA, Dev, stage and Prod.
+      * Changing the app config file means we need to change source code , commit the change, creating a new image and then go through the complete deployment proccess .
+
+[ Solution ]
+      = In kubernetes ConfigMap handle this situation . It allow us to handle configuration file much more easy way. We can store our all confugration file in ConfigMap object 
+         and deploy that file with a partciular config file in deployment.
+
+How you can use ?
+= kubectl create conifgmap [myapp] [abc.conifg]
+
+myapp = It is a Configmap object file 
+abc.config = It is a Configuration file for application 
+
+Configuration file can accessed by container in follwing wasys 
+
+1 : As volumes in pod 
+2 : As environment in pod 
+
+configmap wit Volume 
+====================================================================
+ apiVersion: v1
+kind: Pod
+metadata:
+  name: myvolconfig
+spec:
+  containers:
+  - name: c1
+    image: centos
+    command: ["/bin/bash", "-c", "while true; do echo Hrihtik-Bhardwaj; sleep 5 ; done"]
+    volumeMounts:
+      - name: testconfigmap
+        mountPath: "/tmp/config"   # the config files will be mounted as ReadOnly by default here
+  volumes:
+  - name: testconfigmap
+    configMap:
+       name: mymap   # this should match the config map name created in the first step
+       items:
+       - key: abc.conf
+         path: abc.conf
+=======================================================================
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myenvconfig
+spec:
+  containers:
+  - name: c1
+    image: centos
+    command: ["/bin/bash", "-c", "while true; do echo Hrithik-Bhardwaj; sleep 5 ; done"]
+    env:
+    - name: MYENV         # env name in which value of the key is stored
+      valueFrom:
+        configMapKeyRef:
+          name: mymap      # name of the config created
+          key: abc.conf            
+======================================================================
+
+
+
