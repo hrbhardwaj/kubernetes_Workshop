@@ -1,0 +1,33 @@
+# Liveness Probe :
+    = A pod is only maintain the state of conytainer is ready or not, But With the help of Liveness-probe we can verify Our Container in a pod is Healty and ready to serve 
+      traffic, Kubernetes provides for a range of health checking mechanis.
+ *  For running healthCheck, we would use cmds Specific to the application 0
+   If the cmd succeds , it return 0 and kublet consider the container to be alive and healthy 
+   If the cmd return a non-zero value the kubelet kills the podd and recreate it.
+============================
+HEALTHCHECK/LIVENESSPROBE
+==========================================================================================================================
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    test: liveness
+  name: mylivenessprobe
+spec:
+  containers:
+  - name: liveness
+    image: ubuntu
+    args:
+    - /bin/sh
+    - -c
+    - touch /tmp/healthy; sleep 1000
+    livenessProbe:                                          
+      exec:
+        command:                                         
+        - cat                
+        - /tmp/healthy
+      initialDelaySeconds: 5          
+      periodSeconds: 5                                 
+      timeoutSeconds: 30  
+
+=======================================================================
