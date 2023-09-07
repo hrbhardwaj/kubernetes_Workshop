@@ -16,3 +16,90 @@ metadata:
    labels:
      name: dev
 ====================================================================
+
+# ResourceQuota 
+
+Managing compute resources for containersor namespaces.
+
+* In kubernetes pod always run without any limit on CPU and memory 
+* You can specify how many cpu and memory eaxh contanier needs 
+* CPU is specifyed in units of core ( 1 CPU = 1000mi )
+  Memory is specified in units of bytes 
+
+Two types of constrants can be set for each resources :
+
+A Request : It is the amount of resources that sysytem will generate for the container and kuberntes will give that amount of resource and where or which node tp place the pod 
+             with the help of schedular 
+
+A limit : It is the maximum amount of resource that kubernetes will allow the continer to use.
+--------------------------------------
+if, request = 2 gb
+    limit = ? not mention
+then,  
+    limit will 0 automaticlly take the default or cluster resources 
+--------------------------------------
+if, request = not mention?
+    limit = 5gb 
+then, 
+    request = limit [it will take 5gb resources to container]
+
+============pod with limit and request==========================================
+apiVersion: v1
+kind: Pod
+metadata:
+  name: resources
+spec:
+  containers:
+  - name: resource
+    image: centos
+    command: ["/bin/bash", "-c", "while true; do echo Hrithik - Bhardwaj; sleep 5 ; done"]
+    resources:                                          
+      requests:
+        memory: "64Mi"
+        cpu: "100m"
+      limits:
+        memory: "128Mi"
+        cpu: "200m"
+=======================================================================================
+Now Creating the Resource Quota 
+
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+   name: myquota
+spec:
+  hard:
+    limits.cpu: "400m"
+    limits.memory: "400Mi"
+    requests.cpu: "200m"
+    requests.memory: "200Mi"
+===============================================================================
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: deployments
+spec:
+  replicas: 3
+  selector:      
+    matchLabels:
+     objtype: deployment
+  template:
+    metadata:
+      name: testpod8
+      labels:
+        objtype: deployment
+    spec:
+     containers:
+       - name: c00
+         image: ubuntu
+         command: ["/bin/bash", "-c", "while true; do echo Hrihtik - Bhardwaj; sleep 5 ; done"]
+         resources:
+            requests:
+              cpu: "200m"
+
+=======================================================================================
+
+
+
+
