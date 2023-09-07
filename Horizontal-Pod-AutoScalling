@@ -1,0 +1,37 @@
+# Horizontal-Pod-Autoscalling :
+
+* It is the object in kubernetes that can be scale pods based on observes CPU utilization.
+* Scalling can be done for scalable object like controller, deployment and replicaset 
+* Before HPA we need to download the Metric server on cluster that will provide the all the pods utilization of CPU and memory to the HPA.
+
+Kubectl autoscale deployment mydev --cpu-percent=20 --min=1 --max=10
+
+deployment = It is object 
+mydev = It is object name 
+================================================
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+   name: mydeploy
+spec:
+   replicas: 1
+   selector:
+    matchLabels:
+     name: deployment
+   template:
+     metadata:
+       name: testpod8
+       labels:
+         name: deployment
+     spec:
+      containers:
+        - name: c00
+          image: httpd
+          ports:
+          - containerPort: 80
+          resources:
+            limits:
+              cpu: 500m
+            requests:
+              cpu: 200m
+----------------------------------------------
