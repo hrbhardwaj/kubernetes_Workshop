@@ -1,0 +1,18 @@
+# Namespace 
+
+ * A nanmespace is a group of elements that each have a unique nane or identity and it is used to do another tasj or project in same cluster with isolated environment 
+ * Kubernetes always search the pods or any object in default namespace .
+
+If you want to change the default checking namespace to a particular namespace resources .
+
+  kubectl conifg set-context $(kubectl config currnet-context) --namespace=dev 
+
+Yuu can create the namespace by yaml file :
+==============================NAMESPACES===================================
+apiVersion: v1
+kind: Namespace
+metadata:
+   name: dev
+   labels:
+     name: dev
+====================================================================
