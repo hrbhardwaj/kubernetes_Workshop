@@ -1,7 +1,5 @@
 # kubernetes_Workshop
 
-# Kubernetes Objects Overview
-
 This README provides a brief explanation of common Kubernetes objects and their usage.
 
 ## Pods
