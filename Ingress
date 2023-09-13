@@ -1,0 +1,40 @@
+Ingress : In Kubernetes, an Ingress is an API object that manages external access to services within a cluster. It provides a way to configure the routing of external traffic to 
+          various services based on hostnames, paths, and other HTTP request attributes. Essentially, an Ingress acts as a traffic controller for incoming requests.
+
+Uses : Before you can use Ingress resources, you need to have an Ingress controller installed and running in your Kubernetes cluster. Popular Ingress controllers include Nginx Ingress
+        Controller, Traefik, and Istio. Install and configure the Ingress controller according to its documentation.
+
+
+Example :
+=================================================================
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+spec:
+  rules:
+    - host: myapp.example.com
+      http:
+        paths:
+          - path: /app1
+            pathType: Prefix
+            backend:
+              service:
+                name: app1-service
+                port:
+                  number: 80
+          - path: /app2
+            pathType: Prefix
+            backend:
+              service:
+                name: app2-service
+                port:
+                  number: 80
+          - path: /app3
+            pathType: Prefix
+            backend:
+              service:
+                name: app3-service
+                port:
+                  number: 80
+==============================================================
