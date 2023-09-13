@@ -68,7 +68,7 @@ CronJobs
 - **Use**: Multi-tenancy, resource isolation.
 - **Example**: Creating separate namespaces for development, production.
 
-## Resources
+ Resources
 
 - **Definition**: Requests and limits on CPU and memory for Pods.
 - **Use**: Managing resource allocation.
