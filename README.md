@@ -20,7 +20,7 @@ This README provides a brief explanation of common Kubernetes objects and their 
 - **Use**: Ensuring application availability and easy updates.
 - **Example**: Deploying a new version of an app while maintaining availability.
 
-## ConfigMaps
+## Config-Maps
 
 - **Definition**: Store configuration data in key-value pairs, decoupled from Pods.
 - **Use**: Separating configuration from application code.
@@ -56,7 +56,7 @@ This README provides a brief explanation of common Kubernetes objects and their 
 - **Use**: Running batch jobs or one-time tasks.
 - **Example**: Running data processing tasks.
 
-## CronJobs
+CronJobs
 
 - **Definition**: Schedule Jobs to run periodically, similar to cron in Unix.
 - **Use**: Automating recurring tasks.
@@ -74,11 +74,6 @@ This README provides a brief explanation of common Kubernetes objects and their 
 - **Use**: Managing resource allocation.
 - **Example**: Ensuring fair resource distribution among Pods.
 
-## Annotations & Labels
-
-- **Definition**: Key-value pairs used for metadata and filtering.
-- **Use**: Adding information or grouping objects.
-- **Example**: Marking Pods for monitoring or applying policies.
 
 ## Conclusion
 
