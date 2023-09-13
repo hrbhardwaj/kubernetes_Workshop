@@ -1,0 +1,43 @@
+Statefull-Set : A StatefulSet is a Kubernetes resource object that is used to manage stateful applications in a clustered environment, such as databases and other distributed systems.
+                Unlike a Deployment, which manages stateless applications, a StatefulSet provides guarantees about the ordering and uniqueness of pods. Each pod in a StatefulSet has a
+                unique, stable network identity and persistent storage, which makes it suitable for applications that require stable network hostnames, ordered scaling, and 
+                data persistence.
+
+Uses : Use a StatefulSet to deploy your database. A StatefulSet ensures that each pod (database instance) has a stable network identity and a unique hostname. 
+      
+
+Example :
+================================================================================
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: db-statefulset
+spec:
+  serviceName: db-service
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mydatabase
+  template:
+    metadata:
+      labels:
+        app: mydatabase
+    spec:
+      containers:
+      - name: db-container
+        image: my-database-image:latest
+        envFrom:
+        - configMapRef:
+            name: db-config
+        ports:
+        - containerPort: 5432
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: standard
+      resources:
+        requests:
+          storage: 10Gi
+===================================================================================
