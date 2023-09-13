@@ -42,3 +42,21 @@ spec:
           image: nginx:latest
 ====================================================
 
+Example : Web server + database container in a Pod.
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-db-pod
+spec:
+  containers:
+    - name: web-server
+      image: my-web-server-image:latest
+      ports:
+        - containerPort: 80
+    - name: database
+      image: my-database-image:latest
+      ports:
+        - containerPort: 5432
+
+
